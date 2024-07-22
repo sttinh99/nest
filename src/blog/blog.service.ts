@@ -8,7 +8,12 @@ export class BlogService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createBlogDto: CreateBlogDto) {
-    return 'This action adds a new blog';
+    console.log('createBlogDto', createBlogDto);
+
+    return this.prisma.blog.create({
+      data: createBlogDto,
+    });
+    // return 'This action adds a new blog';
   }
 
   findAll() {
@@ -24,10 +29,16 @@ export class BlogService {
   }
 
   update(id: number, updateBlogDto: UpdateBlogDto) {
-    return `This action updates a #${id} blog`;
+    const updateBlog = this.prisma.blog.update({
+      where: { id },
+      data: updateBlogDto,
+    });
+    return updateBlog;
+    // return `This action updates a #${id} blog`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} blog`;
+    return this.prisma.blog.delete({ where: { id } });
+    // return `This action removes a #${id} blog`;
   }
 }
